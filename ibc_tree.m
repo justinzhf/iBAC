@@ -4,13 +4,12 @@ function node=ibc_tree(node,tra_acc_threhold,seg_acc_threhold,root_segs)
 %output: 以node为根节点的树
 %struct: chose_seg: 选取的用来和其他轨迹的分段计算距离的分段，用以划分acc和neg
 %        length: 该节点在树中的深度
-%        acc: 经过本次划分后，被划分为和chose_seg分段所在的轨迹T为同一类别的所有轨迹的集合
-%        neg: 经过本次划分后，被划分为和chose_seg分段所在的轨迹T为不同类别的所有轨迹的集合
-%        left: 指向对neg集合再次进行划分的节点
-%        right: 指向对acc集合再次进行划分的节点
+%        cla: 本节点待划分的轨迹的集合 
+%        left: 指向neg_node,neg_node.cla定义如下：设node.chose_seg分段所在的轨迹为T，neg_node.cla是经过本次划分后，和轨迹T为不同类别的所有轨迹的集合
+%        right: 指向acc_node,acc_node.cla定义如下：设node.chose_seg分段所在的轨迹为T，acc_node.cla是经过本次划分后，和轨迹T为同一类别的所有轨迹的集合
 
 
-trajs=node.acc;
+trajs=node.cla;
 [ts_h,ts_w]=size(trajs);
 [ss_h,~]=size(root_segs);
 
@@ -22,44 +21,25 @@ trajs=node.acc;
 if isempty(trajs) ||node.length>tra_acc_threhold ||ts_h<=1 || node.chose_seg>ss_h
     return;
 end
-if isempty(node.acc)
-    acc_ids=[];
-else
-    acc_ids=node.acc(:,1);
-end
+
+acc_node=struct('chose_seg',node.chose_seg+1,'length',node.length+1,'cla',[],'left',[],'right',[]);
+
+%neg_node的出现，意味着一个新的类别的诞生，chose_seg应从新的轨迹的segments中选取，length也应当重置
+neg_node=struct('chose_seg',1,'length',0,'cla',[],'left',[],'right',[]);
 
 for i=1:2:ts_h-1
-    dis=min_st_distance(root_segs(node.chose_seg,:),trajs(i:i+1,2:ts_w));
-    traj=trajs(i:i+1,:);
+    dis=min_st_distance(root_segs(acc_node.chose_seg,:),trajs(i:i+1,2:ts_w));
     if dis<seg_acc_threhold 
-        if ismember(traj(1,1),acc_ids)~=1
-            node.acc=[node.acc;trajs(i:i+1,:)];
-        end
+        acc_node.cla=[acc_node.cla;trajs(i:i+1,:)];
     else
-        if ismember(traj(1,1),acc_ids)
-            node.acc(i:i+1,:)=zeros(2,ts_w);
-        end
-        node.neg=[node.neg;trajs(i:i+1,:)];
+        neg_node.cla=[neg_node.cla;trajs(i:i+1,:)];
     end
 end
 
-%经过本次分类后，如果愿node.acc集合中有轨迹被分到了node.neg中，需要将该轨迹从node.acc中删除掉
-[acc_h,~]=size(node.acc);
-acc_tmp=[];
-for i=1:acc_h
-    if node.acc(i,1)~=0
-        acc_tmp=[acc_tmp;node.acc(i,:)];
-    end
-end
-node.acc=acc_tmp;
-
-
-acc_node=struct('chose_seg',node.chose_seg+1,'length',node.length+1,'acc',node.acc,'neg',[],'left',[],'right',[]);
 acc_node=ibc_tree(acc_node,tra_acc_threhold,seg_acc_threhold,root_segs);
 
-if isempty(node.neg)~=1
-    new_segs=m_segment(node.neg(1,2:ts_w),node.neg(2,2:ts_w));
-    neg_node=struct('chose_seg',1,'length',0,'acc',node.neg,'neg',[],'left',[],'right',[]);
+if isempty(neg_node.cla)~=1
+    new_segs=m_segment(neg_node.cla(1,2:ts_w),neg_node.cla(2,2:ts_w));
     neg_node=ibc_tree(neg_node,tra_acc_threhold,seg_acc_threhold,new_segs);
     node.left=neg_node;
     node.right=acc_node;

@@ -28,8 +28,8 @@ root_traj=trajectories(1:2,2:t_w);
 root_segs=m_segment(root_traj(1,:),root_traj(2,:));
 
 %todo
-root_node=struct('chose_seg',1,'length',0,'cla',[],'left',[],'right',[]);
-root_node.cla=trajectories;
+root_node=struct('chose_seg',1,'length',0,'',[],'left',[],'right',[]);
+root_node.acc=trajectories;
 root_node=ibc_tree(root_node,tra_acc_threhold,seg_acc_threhold,root_segs);
 end
 
