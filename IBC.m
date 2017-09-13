@@ -1,4 +1,4 @@
-function IBC(T,seg_acc_threhold,tra_acc_threhold)
+function root_node=IBC(T,seg_acc_threhold,tra_acc_threhold)
 %T.t11=[x1,x2,x3;y1,y2,y3]
 %T=load('trajectory.mat');
 T.t11=[11,T.X;11,T.Y1_1];
@@ -28,8 +28,9 @@ root_traj=trajectories(1:2,2:t_w);
 root_segs=m_segment(root_traj(1,:),root_traj(2,:));
 
 %todo
-root_node=struct('chose_seg',1,'length',0,'acc',[],'neg',[],'left',[],'right',[],'traj',1);
-root_node=ibc_tree(root_node,trajectories,tra_acc_threhold,seg_acc_threhold,root_segs);
+root_node=struct('chose_seg',1,'length',0,'acc',[],'neg',[],'left',[],'right',[]);
+root_node.acc=trajectories;
+root_node=ibc_tree(root_node,tra_acc_threhold,seg_acc_threhold,root_segs);
 end
 
 

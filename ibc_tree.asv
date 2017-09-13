@@ -6,8 +6,7 @@ function node=ibc_tree(node,tra_acc_threhold,seg_acc_threhold,root_segs)
 %        length: 该节点在树中的深度
 %        acc: 经过本次划分后，被划分为和chose_seg分段所在的轨迹T为同一类别的所有轨迹的集合
 %        neg: 经过本次划分后，被划分为和chose_seg分段所在的轨迹T为不同类别的所有轨迹的集合
-%        left: 指向对neg集合再次进行划分的节点
-%        right: 指向对acc集合再次进行划分的节点
+%        left: 指向对neg集合再次进行hua
 
 
 trajs=node.acc;
@@ -18,7 +17,6 @@ trajs=node.acc;
 %当要求的接受轨迹为1类的长度满足要求，则不再进行分类
 %当初始类（或上次分类产生的类）只有少于或等于1条轨迹时，则不再进行分类
 %当某一轨迹的segment已经全部被检测过，则不再进行分类
-%还可以再增加一个条件：当acc集合多次划分都不再改变时，则不再进行分类。该条件还未加上
 if isempty(trajs) ||node.length>tra_acc_threhold ||ts_h<=1 || node.chose_seg>ss_h
     return;
 end
