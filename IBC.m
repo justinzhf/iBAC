@@ -22,7 +22,7 @@ T.t35=[35,T.X;35,T.Y3_5];
 
 trajectories=[T.t11;T.t12;T.t13;T.t14;T.t15;
     T.t21;T.t22;T.t23;T.t24;T.t25;
-    T.t31;T.t32;T.t33;T.t34;T.t35];
+    T.t31;T.t32;T.t33;T.t34;T.t35]; 
 [~,t_w]=size(trajectories);
 root_traj=trajectories(1:2,2:t_w);
 root_segs=m_segment(root_traj(1,:),root_traj(2,:));
