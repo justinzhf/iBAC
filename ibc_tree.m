@@ -2,9 +2,10 @@ function node=ibc_tree(node,tra_acc_threhold,seg_acc_threhold,root_segs)
 %input: node=('chose_seg',node.chose_seg+1,'length',node.length+1,'acc',node.acc,'neg',[],'left',[],'right',[])
 %       root_segs: 某一轨迹所有segment组成的集合，node中的chose_seg是从该root_segs集合中选取的
 %output: 以node为根节点的树
-%struct: chose_seg: 选取的用来和其他轨迹的分段计算距离的分段，用以划分acc和neg
+%node字段: chose_seg: 选取的用来和其他轨迹的分段计算距离的分段，用以划分acc和neg
 %        length: 该节点在树中的深度
-%        cla: 本节点待划分的轨迹的集合 
+%        cla: 本节点待划分的轨迹的集合,为struct('id',[],'cord',[]) N x 1的矩阵，N是轨迹数量，
+%        id唯一标识符，是字符串类型，cord是2 x 1的矩阵，[x1,x2,x3...;y1,y2,y3...]
 %        left: 指向neg_node,neg_node.cla定义如下：设node.chose_seg分段所在的轨迹为T，neg_node.cla是经过本次划分后，和轨迹T为不同类别的所有轨迹的集合
 %        right: 指向acc_node,acc_node.cla定义如下：设node.chose_seg分段所在的轨迹为T，acc_node.cla是经过本次划分后，和轨迹T为同一类别的所有轨迹的集合
 

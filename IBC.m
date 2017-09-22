@@ -1,6 +1,5 @@
 function root_node=IBC(T,seg_acc_threhold,tra_acc_threhold)
 %T=load('trajectory.mat');
-
 %
 % T.t11=[11,T.X;11,T.Y1_1];
 % T.t12=[12,T.X;12,T.Y1_2];
@@ -56,7 +55,7 @@ T_data(15).id='35';
 T_data(15).cord=[T.X;T.Y3_5];
 
 
-trajectories=T_data'; 
+trajectories=T_data'; %注意，要转置一下
 root_traj=trajectories(1);
 root_segs=m_segment(root_traj.cord(1,:),root_traj.cord(2,:));
 
