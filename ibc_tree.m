@@ -10,14 +10,14 @@ function node=ibc_tree(node,tra_acc_threhold,seg_acc_threhold,root_segs)
 
 
 trajs=node.cla;
-[ts_h,ts_w]=size(trajs);
+[ts_h,~]=size(trajs);
 [ss_h,~]=size(root_segs);
 
 %当初始类（或上次分类产生的类）已经为空，则无法进行分类
 %当要求的接受轨迹为1类的长度满足要求，则不再进行分类
 %当初始类（或上次分类产生的类）只有少于或等于1条轨迹时，则不再进行分类
 %当某一轨迹的segment已经全部被检测过，则不再进行分类
-%还可以再增加一个条件：当acc集合多次划分都不再改变时，则不再进行分类。该条件还未加上
+%还可以再增加一个条件：当cla集合多次划分都不再改变时，则不再进行分类。该条件还未加上
 if isempty(trajs) ||node.length>tra_acc_threhold ||ts_h<=1 || node.chose_seg>ss_h
     return;
 end
@@ -27,19 +27,19 @@ acc_node=struct('chose_seg',node.chose_seg+1,'length',node.length+1,'cla',[],'le
 %neg_node的出现，意味着一个新的类别的诞生，chose_seg应从新的轨迹的segments中选取，length也应当重置
 neg_node=struct('chose_seg',1,'length',0,'cla',[],'left',[],'right',[]);
 
-for i=1:2:ts_h-1
-    dis=min_st_distance(root_segs(acc_node.chose_seg,:),trajs(i:i+1,2:ts_w));
+for i=1:ts_h
+    dis=min_st_distance(root_segs(acc_node.chose_seg,:),trajs(i).cord);
     if dis<seg_acc_threhold 
-        acc_node.cla=[acc_node.cla;trajs(i:i+1,:)];
+        acc_node.cla=[acc_node.cla;trajs(i)];
     else
-        neg_node.cla=[neg_node.cla;trajs(i:i+1,:)];
+        neg_node.cla=[neg_node.cla;trajs(i)];
     end
 end
 
 acc_node=ibc_tree(acc_node,tra_acc_threhold,seg_acc_threhold,root_segs);
 
 if isempty(neg_node.cla)~=1
-    new_segs=m_segment(neg_node.cla(1,2:ts_w),neg_node.cla(2,2:ts_w));
+    new_segs=m_segment(neg_node.cla(1).cord(1,:),neg_node.cla(1).cord(2,:));
     neg_node=ibc_tree(neg_node,tra_acc_threhold,seg_acc_threhold,new_segs);
     node.left=neg_node;
     node.right=acc_node;

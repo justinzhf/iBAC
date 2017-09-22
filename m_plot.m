@@ -1,4 +1,5 @@
 function m_plot(data)
+%data=load('./test data/ASTS.mat')
 [d_h,d_s]=size(data);
 hold on;
 for i=1:d_s

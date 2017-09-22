@@ -1,7 +1,7 @@
 function t=load_data(data)
 %input: data: NumX4的table，第1-4列含义分别为：年，名称，经度，纬度，年+名称唯一确定一条轨迹
 %output: t:
-%t为1xn的struct数组，每一行为一个struct，代表一条轨迹，struct.id=年+名称，i为字符类型，struct.cord=[x1,x2,x3...;y1,y2,y3...]
+%t为1xn的struct数组，每一行为一个struct，代表一条轨迹，struct.id=年+名称，struct.cord=[x1,x2,x3...;y1,y2,y3...]
 %最终结果存储在test/data/ASTS.mat文件中
 
 [data_h,~]=size(data);
