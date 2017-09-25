@@ -19,7 +19,7 @@ trajs=node.cla;
 %当初始类（或上次分类产生的类）只有少于或等于1条轨迹时，则不再进行分类
 %当某一轨迹的segment已经全部被检测过，则不再进行分类
 %还可以再增加一个条件：当cla集合多次划分都不再改变时，则不再进行分类。该条件还未加上
-if isempty(trajs) ||node.length>tra_acc_threhold ||ts_h<=1 
+if isempty(trajs) ||node.length>tra_acc_threhold ||ts_h<=1 || isempty(root_segs)
     return;
 end
 
@@ -43,8 +43,17 @@ root_segs(acc_node.chose_seg,:)=[];
 acc_node=ibc_tree(acc_node,tra_acc_threhold,seg_acc_threhold,root_segs);
 
 if isempty(neg_node.cla)~=1
-    new_segs=m_segment(neg_node.cla(1).cord(1,:),neg_node.cla(1).cord(2,:));
+    [tra_h,~]=size(neg_node.cla);
+    chose_traj=unidrnd(tra_h);
+    new_segs=m_segment(neg_node.cla(chose_traj).cord(1,:),neg_node.cla(chose_traj).cord(2,:));
     [nss_h,~]=size(new_segs);
+    
+    
+if nss_h<=0
+    a=1
+end
+        
+        
     chose_seg=unidrnd(nss_h);
     neg_node.chose_seg=chose_seg;
     new_segs(chose_seg,:)=[];
