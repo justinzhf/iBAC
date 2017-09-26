@@ -1,0 +1,22 @@
+function distancets_distance(seg1,seg2)
+si=seg1(1:2);ei=seg1(3:4);
+sj=seg2(1:2);ej=seg2(3:4);
+va=ei-si;
+vb=ej-sj;
+length_a=va*va';
+length_b=vb*vb';
+if (length_a)>(length_b)
+    ab=va*vb;
+    vb_pdd=[-vb(1,2),vb(1,1)];
+    if ab<0
+        sj=seg2(3:4);ej=seg2(1:2);
+        vb=ej-sj;
+        prl_distance_1=abs((sj-si)*vb')/length_b;
+        prl_distance_2=abs((ej-ei)*vb')/length_b;
+        pdd_distance_1=abs((sj-si)*vb_pdd')/length_b;
+        pdd_distance_2=abs((ej-ei)*vb_pdd')/length_b;
+        agl_distance=abs(va*vb_pdd')/length_b;
+    end
+end
+
+end

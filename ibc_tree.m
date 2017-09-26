@@ -31,7 +31,7 @@ acc_node=struct('chose_seg',chose_seg,'length',node.length+1,'cla',[],'left',[],
 neg_node=struct('chose_seg',[],'length',0,'cla',[],'left',[],'right',[]);
 
 for i=1:ts_h
-    dis=min_st_distance(root_segs(acc_node.chose_seg,:),trajs(i).cord);
+    dis=min_st_distance(root_segs(acc_node.chose_seg,:),trajs(i).cord,'th');
     if dis<seg_acc_threhold 
         acc_node.cla=[acc_node.cla;trajs(i)];
     else
@@ -48,11 +48,6 @@ if isempty(neg_node.cla)~=1
     new_segs=m_segment(neg_node.cla(chose_traj).cord(1,:),neg_node.cla(chose_traj).cord(2,:));
     [nss_h,~]=size(new_segs);
     
-    
-if nss_h<=0
-    a=1
-end
-        
         
     chose_seg=unidrnd(nss_h);
     neg_node.chose_seg=chose_seg;

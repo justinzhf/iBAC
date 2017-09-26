@@ -7,11 +7,6 @@ cord=[X;Y];
 [x_h,x_w]=size(X);
 [y_h,y_w]=size(Y);
 S=zeros(x_w-1,4);
-
-if x_w==1
-    x_w=1
-end
-
 for i=1:x_w-1
     S(i,:)=[cord(:,i)',cord(:,i+1)'];
 end

@@ -1,6 +1,6 @@
 function distance=mbr_distance(seg1,seg2)
 %input: seg1=[xs,ys,xd,yd]
-%output: distance between seg1,seg2
+%output: mbr_distance between seg1,seg2
 %
 
 s=zeros(2,4);%[xl,xu,yl,yu;xl',xu',yl',yu']

@@ -1,4 +1,5 @@
 function root_node=IBC(T,seg_acc_threhold,tra_acc_threhold)
+%
 %T=load('trajectory.mat');
 %
 % T.t11=[11,T.X;11,T.Y1_1];
