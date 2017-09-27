@@ -48,7 +48,6 @@ if isempty(neg_node.cla)~=1
     new_segs=m_segment(neg_node.cla(chose_traj).cord(1,:),neg_node.cla(chose_traj).cord(2,:));
     [nss_h,~]=size(new_segs);
     
-        
     chose_seg=unidrnd(nss_h);
     neg_node.chose_seg=chose_seg;
     new_segs(chose_seg,:)=[];

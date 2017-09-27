@@ -22,42 +22,59 @@ function root_node=IBC(T,seg_acc_threhold,tra_acc_threhold)
 % T.t35=[35,T.X;35,T.Y3_5];
 %
 T_data(1).id='11';
+T_data(1).clus_id=0;
 T_data(1).cord=[T.X;T.Y1_1];
 T_data(2).id='12';
+T_data(2).clus_id=0;
 T_data(2).cord=[T.X;T.Y1_2];
 T_data(3).id='13';
+T_data(3).clus_id=0;
 T_data(3).cord=[T.X;T.Y1_3];
 T_data(4).id='14';
+T_data(4).clus_id=0;
 T_data(4).cord=[T.X;T.Y1_4];
 T_data(5).id='15';
+T_data(5).clus_id=0;
 T_data(5).cord=[T.X;T.Y1_5];
 
 
 T_data(6).id='21';
+T_data(6).clus_id=0;
 T_data(6).cord=[T.X;T.Y2_1];
 T_data(7).id='22';
+T_data(7).clus_id=0;
 T_data(7).cord=[T.X;T.Y2_2];
 T_data(8).id='23';
+T_data(8).clus_id=0;
 T_data(8).cord=[T.X;T.Y2_3];
 T_data(9).id='24';
+T_data(9).clus_id=0;
 T_data(9).cord=[T.X;T.Y2_4];
 T_data(10).id='25';
+T_data(10).clus_id=0;
 T_data(10).cord=[T.X;T.Y2_5];
 
 T_data(11).id='31';
+T_data(11).clus_id=0;
 T_data(11).cord=[T.X;T.Y3_1];
 T_data(12).id='32';
+T_data(12).clus_id=0;
 T_data(12).cord=[T.X;T.Y3_2];
 T_data(13).id='33';
+T_data(13).clus_id=0;
 T_data(13).cord=[T.X;T.Y3_3];
 T_data(14).id='34';
+T_data(14).clus_id=0;
 T_data(14).cord=[T.X;T.Y3_4];
 T_data(15).id='35';
+T_data(15).clus_id=0;
 T_data(15).cord=[T.X;T.Y3_5];
 
 
 trajectories=T_data'; %注意，要转置一下
-root_traj=trajectories(1);
+[traj_h,~]=size(trajectories);
+chose_traj=unidrnd(traj_h);
+root_traj=trajectories(chose_traj);
 root_segs=m_segment(root_traj.cord(1,:),root_traj.cord(2,:));
 
 %todo

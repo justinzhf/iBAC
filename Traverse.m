@@ -13,7 +13,14 @@ end
 
 if isempty(root_node.left)&&isempty(root_node.right)
     clusters.clus_num=clusters.clus_num+1;
+    
+    [tra_h,~]=size(root_node.cla);
+    for i=1:tra_h
+        root_node.cla(i).clus_id=clusters.clus_num;
+    end
+    
     cluster=struct('id',clusters.clus_num,'cla',root_node.cla);
+
     clusters.clus(clusters.clus_num)=cluster;
 end
 end
