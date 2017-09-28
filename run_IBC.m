@@ -1,4 +1,5 @@
 function clusters3=run_IBC(T,seg_acc,tra_acc)
+%input: T 1 x N struct array, struct('id','xxxx','clus_id',123,'cord',[])
     tree=IBC(T,seg_acc,tra_acc);
     clusters=struct('clus_num',0,'clus',struct('id',0,'cla',[]));
     clusters=Traverse(tree,clusters,[]);

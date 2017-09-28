@@ -1,0 +1,10 @@
+function T=load_raw_traj(raw_traj)
+
+C1=raw_traj.C1;
+for i=1:50
+    T_data(i).id='1';
+    T_data(i).clus_i=0;
+    T_data(i.)
+end
+
+end
