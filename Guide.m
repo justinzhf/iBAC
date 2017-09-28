@@ -4,9 +4,7 @@
 %% IBC使用说明
 % Description of IBC
 T=load('./test data/struct_traj.mat');
-tree=IBC(T.T_data,25,5);
-clusters=struct('clus_num',0,'clus',struct('id',0,'cla',[]));
-clusters=Traverse(tree,clusters,[]);
+run_IBC(T.T_data,25,30);
 %% Section 2 Title
 % Description of second code block
 
