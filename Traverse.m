@@ -20,12 +20,13 @@ if isempty(root_node.left)&&isempty(root_node.right)
         for i=1:tra_h
             root_node.cla(i).clus_id=clusters.clus_num;
         end
+        cla=root_node.cla;
     else
         for i=1:tra_h
             pre_clus=pre_clusters.clus(root_node.cla(i).clus_id).cla;
             cla=[cla;pre_clus];
         end
-        [total_traj_h,~]=size(pre_clus);
+        [total_traj_h,~]=size(cla);
         for i=1:total_traj_h
             cla(i).clus_id=clusters.clus_num;
         end
