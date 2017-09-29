@@ -41,4 +41,12 @@ function clusters3=run_IBC(T,seg_acc,tra_acc)
     tree7=IBC(T7,seg_acc,tra_acc);
     clusters7=struct('clus_num',0,'clus',struct('id',0,'cla',[]));
     clusters7=Traverse(tree7,clusters7,clusters6);
+    
+    
+    T8=get_new_data(clusters7);
+    tree8=IBC(T8,seg_acc,tra_acc);
+    clusters8=struct('clus_num',0,'clus',struct('id',0,'cla',[]));
+    clusters8=Traverse(tree8,clusters8,clusters7);
+   
+    
 end
