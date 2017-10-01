@@ -40,7 +40,14 @@ for i=1:ts_h
 end
 
 root_segs(acc_node.chose_seg,:)=[];
-acc_node=ibc_tree(acc_node,tra_acc_threhold,seg_acc_threhold,root_segs);
+
+if isempty(acc_node.cla)~=1
+    acc_node=ibc_tree(acc_node,tra_acc_threhold,seg_acc_threhold,root_segs);    
+    node.right=acc_node;
+else
+    node.right=[];
+end
+
 
 if isempty(neg_node.cla)~=1
     [tra_h,~]=size(neg_node.cla);
@@ -53,9 +60,8 @@ if isempty(neg_node.cla)~=1
     new_segs(chose_seg,:)=[];
     neg_node=ibc_tree(neg_node,tra_acc_threhold,seg_acc_threhold,new_segs);
     node.left=neg_node;
-    node.right=acc_node;
 else
     node.left=[];
-    node.right=acc_node;
+ 
 end
 end
