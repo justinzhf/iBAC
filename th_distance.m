@@ -1,4 +1,7 @@
 function distance=th_distance(seg1,seg2)
+%input: seg1=[xs,ys,xd,yd]
+%output: th_distance between seg1,seg2
+
 si=seg1(1:2);ei=seg1(3:4);
 sj=seg2(1:2);ej=seg2(3:4);
 va=ei-si;
@@ -18,7 +21,11 @@ if (length_a)>(length_b)
     pdd_distance_2=abs((ej-ei)*va_pdd')/length_a;
     agl_distance=abs(vb*va_pdd')/length_a;
 
-    pdd_distance=(pdd_distance_1*pdd_distance_1+pdd_distance_2*pdd_distance_2)/(pdd_distance_1+pdd_distance_2);
+    if pdd_distance_1==0&&pdd_distance_2==0
+        pdd_distance=0;
+    else
+         pdd_distance=(pdd_distance_1*pdd_distance_1+pdd_distance_2*pdd_distance_2)/(pdd_distance_1+pdd_distance_2);
+    end
     prl_distance=min(prl_distance_1,prl_distance_2);
 
     distance=pdd_distance+prl_distance+agl_distance;

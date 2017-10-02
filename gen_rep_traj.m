@@ -53,7 +53,7 @@ for i=1:sp_h
     end
     if i>1
         pre_px=sorted_trans_p(i-1,1); 
-        if px-pre_px>=diff_threhold && num_p>=min_lns
+        if abs(px-pre_px)>=diff_threhold && num_p>=min_lns
             py=mean(contain_pys);
             true_p=[px,py]*trans_mat^(-1);
             rep_traj_x=[rep_traj_x,true_p(1,1)];
