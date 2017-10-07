@@ -26,8 +26,12 @@ seg_num=1;
 for i=L_w:-1:2
     p_s=cord(:,L(1,i));
     p_e=cord(:,L(1,i-1));
-    S(seg_num,:)=[p_s',p_e'];
-    seg_num=seg_num+1;
+    S(seg_num,:)=[p_s]
+end
+
+S=zeros(x_w-1,4);
+for i=1:x_w-1
+    S(i,:)=[cord(:,i)',cord(:,i+1)'];
 end
 
 

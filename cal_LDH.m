@@ -12,11 +12,20 @@ for i=1:points_h-1
     p1=cord(:,par_points(1,i))';
     p2=cord(:,par_points(1,i+1))';
     seg=[p1,p2];
-    for j=start_index:end_index-1
-        primitive_seg=[cord(:,j)',cord(:,j+1)'];
-        total_pdd=total_pdd+cal_pdd_distance(seg,primitive_seg);
-        total_agl=total_agl+cal_agl_distance(seg,primitive_seg);
+    if start_index<=end_index-1
+        for j=start_index:end_index-1
+            primitive_seg=[cord(:,j)',cord(:,j+1)'];
+            total_pdd=total_pdd+cal_pdd_distance(seg,primitive_seg);
+            total_agl=total_agl+cal_agl_distance(seg,primitive_seg);
+        end
+    else
+        for j=end_index:start_index-1
+            primitive_seg=[cord(:,j)',cord(:,j+1)'];
+            total_pdd=total_pdd+cal_pdd_distance(seg,primitive_seg);
+            total_agl=total_agl+cal_agl_distance(seg,primitive_seg);
+        end
     end
+
 end
 LDH=log2(total_pdd+1)+log2(total_agl+1);
 end

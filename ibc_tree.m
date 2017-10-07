@@ -57,7 +57,6 @@ if isempty(neg_node.cla)~=1
     
     chose_seg=unidrnd(nss_h);
     neg_node.chose_seg=chose_seg;
-    new_segs(chose_seg,:)=[];
     neg_node=ibc_tree(neg_node,tra_acc_threhold,seg_acc_threhold,new_segs);
     node.left=neg_node;
 else
