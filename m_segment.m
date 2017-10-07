@@ -13,8 +13,8 @@ for i=1:x_w
             Graph(i,j)=0;
             Graph(j,i)=0;
         else
-            Graph(i,j)=cal_LH(cord,[i,j])+cal_LDH(cord,[i,j]);
-            Graph(j,i)=cal_LH(cord,[i,j])+cal_LDH(cord,[i,j]);
+            Graph(i,j)=cal_LH(cord,[i,j])+2*cal_LDH(cord,[i,j]);
+            Graph(j,i)=cal_LH(cord,[i,j])+2*cal_LDH(cord,[i,j]);
         end
     end
 end
