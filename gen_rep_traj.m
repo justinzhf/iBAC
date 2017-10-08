@@ -1,4 +1,4 @@
-function rep_traj=gen_rep_traj(diff_threhold,min_lns,cla)
+function rep_traj=gen_rep_traj(diff_threhold,min_lns,cla,s_map)
 %Representative Trajectory Generation
 %input: cla struct(id,'sas','cord',[2 ])
 %output: rep_traj 2 X N mat [x1,x2,x3...;y1,y2,y3...]
@@ -10,7 +10,7 @@ rep_traj_y=[];
 segments=[];
 
 for i=1:traj_h
-    segments=[segments;m_segment(cla(i).cord(1,:),cla(i).cord(2,:))];
+    segments=[segments;s_map(char(cla(i).id))];
 end
 
 [seg_h,~]=size(segments);

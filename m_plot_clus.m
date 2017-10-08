@@ -1,4 +1,5 @@
 function m_plot_clus(clusters,acc_clus_threhold)
+%·ÏÆú²»ÓÃ
     [~,clus_w]=size(clusters.clus);
     color={'r','b','w','k','y'};
     tt=1;

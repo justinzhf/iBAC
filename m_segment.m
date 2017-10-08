@@ -1,4 +1,4 @@
-function S=m_segment(X,Y)
+function S=m_segment(X,Y,con,pre)
 %对轨迹进行分段
 %input:  X:1XN的x坐标  Y:1XN的y坐标
 %output: S M X 4的矩阵。例如:[x1,y1，x2,y2;x3,y3,x4,y4]
@@ -13,8 +13,8 @@ for i=1:x_w
             Graph(i,j)=0;
             Graph(j,i)=0;
         else
-            Graph(i,j)=cal_LH(cord,[i,j])+2*cal_LDH(cord,[i,j]);
-            Graph(j,i)=cal_LH(cord,[i,j])+2*cal_LDH(cord,[i,j]);
+            Graph(i,j)=con*cal_LH(cord,[i,j])+pre*cal_LDH(cord,[i,j])+1;
+            Graph(j,i)=con*cal_LH(cord,[i,j])+pre*cal_LDH(cord,[i,j])+1;
         end
     end
 end

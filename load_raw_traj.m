@@ -9,15 +9,15 @@ C2=raw_traj.C2;
 C3=raw_traj.C3;
 
 for i=1:50
-    T_data(i).id='1';
+    T_data(i).id={strcat('1',num2str(i))};
     T_data(i).clus_id=0;
     T_data(i).cord=[X;C1(i,:)];
     
-    T_data(i+50).id='2';
+    T_data(i+50).id={strcat('2',num2str(i))};
     T_data(i+50).clus_id=0;
     T_data(i+50).cord=[X;C2(i,:)];
     
-    T_data(i+100).id='3';
+    T_data(i+100).id={strcat('3',num2str(i))};
     T_data(i+100).clus_id=0;
     T_data(i+100).cord=[X;C3(i,:)];
 end

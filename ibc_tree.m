@@ -1,4 +1,4 @@
-function node=ibc_tree(node,tra_acc_threhold,seg_acc_threhold,root_segs)
+function node=ibc_tree(node,tra_acc_threhold,seg_acc_threhold,root_segs,s_map)
 %input: node=('chose_seg',node.chose_seg+1,'length',node.length+1,'acc',node.acc,'neg',[],'left',[],'right',[])
 %       root_segs: 某一轨迹所有segment组成的集合，node中的chose_seg是从该root_segs集合中选取的
 %output: 以node为根节点的树
@@ -31,7 +31,7 @@ acc_node=struct('chose_seg',chose_seg,'length',node.length+1,'cla',[],'left',[],
 neg_node=struct('chose_seg',[],'length',0,'cla',[],'left',[],'right',[]);
 
 for i=1:ts_h
-    dis=min_st_distance(root_segs(acc_node.chose_seg,:),trajs(i).cord,'th');
+    dis=min_st_distance(root_segs(acc_node.chose_seg,:),trajs(i),'th',s_map);
     if dis<seg_acc_threhold 
         acc_node.cla=[acc_node.cla;trajs(i)];
     else
@@ -42,7 +42,7 @@ end
 root_segs(acc_node.chose_seg,:)=[];
 
 if isempty(acc_node.cla)~=1
-    acc_node=ibc_tree(acc_node,tra_acc_threhold,seg_acc_threhold,root_segs);    
+    acc_node=ibc_tree(acc_node,tra_acc_threhold,seg_acc_threhold,root_segs,s_map);    
     node.right=acc_node;
 else
     node.right=[];
@@ -52,12 +52,12 @@ end
 if isempty(neg_node.cla)~=1
     [tra_h,~]=size(neg_node.cla);
     chose_traj=unidrnd(tra_h);
-    new_segs=m_segment(neg_node.cla(chose_traj).cord(1,:),neg_node.cla(chose_traj).cord(2,:));
+    new_segs=s_map(char(node.cla(chose_traj).id));
     [nss_h,~]=size(new_segs);
     
     chose_seg=unidrnd(nss_h);
     neg_node.chose_seg=chose_seg;
-    neg_node=ibc_tree(neg_node,tra_acc_threhold,seg_acc_threhold,new_segs);
+    neg_node=ibc_tree(neg_node,tra_acc_threhold,seg_acc_threhold,new_segs,s_map);
     node.left=neg_node;
 else
     node.left=[];
