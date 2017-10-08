@@ -37,6 +37,7 @@ sorted_trans_p=sortrows(trans_p);
 
 rep_traj_trans_x=[];
 rep_traj_trans_y=[];
+pre_px=sorted_trans_p(1,1);
 for i=1:sp_h
     px=sorted_trans_p(i,1);
     contain_pys=[];
@@ -44,7 +45,7 @@ for i=1:sp_h
     for j=1:seg_h
         sx_start=trans_segments(j,1);
         sx_end=trans_segments(j,3);
-        if sx_start<=px&&px<=sx_end
+        if (sx_start<=px&&px<=sx_end)||(sx_start>=px&&px>=sx_end)
             num_p=num_p+1;
             sy_start=trans_segments(j,2);
             sy_end=trans_segments(j,4);
@@ -52,13 +53,12 @@ for i=1:sp_h
         end
     end
     if i>1
-        pre_px=sorted_trans_p(i-1,1); 
         if abs(px-pre_px)>=diff_threhold && num_p>=min_lns
             py=mean(contain_pys);
             true_p=[px,py]*trans_mat^(-1);
             rep_traj_x=[rep_traj_x,true_p(1,1)];
             rep_traj_y=[rep_traj_y,true_p(1,2)];
-            
+            pre_px=px;
         end
     else
         if num_p>=min_lns
