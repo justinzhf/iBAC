@@ -5,11 +5,13 @@ function s_data=gen_segment_data(data,con,pre)
 %output:s_data N X 1 struct array;struct('id',xxx,'segs',[x1,y1,x2,y2;....])
     [~,traj_w]=size(data);
     s_data=[];
-    for i=1:traj_w
+    parfor i=1:traj_w
+        display(i);        
         S=m_segment(data(i).cord(1,:),data(i).cord(2,:),con,pre);
-        segment=struct('id',[],'segs',[]);
-        segment.id=data(i).id;
-        segment.segs=S;
-        s_data=[s_data;segment];
+        s_data(i).id=data(i).id;
+        s_data(i).id=S;
+        
     end
+    display('done');
+    s_data=s_data';
 end

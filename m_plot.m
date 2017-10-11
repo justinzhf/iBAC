@@ -4,7 +4,7 @@ function m_plot(data,color)
 hold on;
 
 for i=1:d_s
-    plot(-data(i).cord(1,:),data(i).cord(2,:),color);
+    plot(data(i).cord(1,:),data(i).cord(2,:),color);
 end
 
 end

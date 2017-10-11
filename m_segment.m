@@ -7,17 +7,21 @@ cord=[X;Y];
 [~,x_w]=size(X);
 
 Graph=zeros(x_w);
+
+
 for i=1:x_w
-    for j=1:x_w
+   parfor j=i:x_w
         if i==j
             Graph(i,j)=0;
-            Graph(j,i)=0;
         else
             Graph(i,j)=con*cal_LH(cord,[i,j])+pre*cal_LDH(cord,[i,j])+1;
-            Graph(j,i)=con*cal_LH(cord,[i,j])+pre*cal_LDH(cord,[i,j])+1;
         end
     end
 end
+
+Graph=Graph'+Graph;
+
+
 [~,L] = dijkstra(Graph,1,x_w);
 
 [~,L_w]=size(L);
@@ -29,6 +33,5 @@ for i=L_w:-1:2
     S(seg_num,:)=[p_s',p_e'];
     seg_num=seg_num+1;
 end
-
 
 
