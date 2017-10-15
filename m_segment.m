@@ -12,9 +12,9 @@ Graph=zeros(x_w);
 for i=1:x_w
    parfor j=i:x_w
         if i==j
-            Graph(i,j)=0;
+            Graph(i,j)=inf;
         else
-            Graph(i,j)=con*cal_LH(cord,[i,j])+pre*cal_LDH(cord,[i,j])+1;
+            Graph(i,j)=con*cal_LH(cord,[i,j])+pre*cal_LDH(cord,[i,j]);
         end
     end
 end

@@ -1,71 +1,42 @@
-%---------------------------------------------------
-% Dijkstra Algorithm
-% author : Dimas Aryo
-% email : mr.dimasaryo@gmail.com
-%
-% usage
-% [cost rute] = dijkstra(Graph, source, destination)
-% 
-% example
-% G = [0 3 9 0 0 0 0;
-%      0 0 0 7 1 0 0;
-%      0 2 0 7 0 0 0;
-%      0 0 0 0 0 2 8;
-%      0 0 4 5 0 9 0;
-%      0 0 0 0 0 0 4;
-%      0 0 0 0 0 0 0;
-%      ];
-% [e L] = dijkstra(G,1,7)
-%---------------------------------------------------
-function [e L] = dijkstra(A,s,d)
-if s==d
-    e=0;
-    L=[s];
-else
+function [cost,path]=dijkstra(graph,sou,des)
+% 无向图的最短路径算法
+%eg： A=[inf 1 5 10;1 inf 1 4;5 1 inf 1;10 4 1 inf]，不直接相连的点，或自身到自身，都记为Inf
+%[c,p]=dijkstra(A,1,4), c=3 p=[4,3,2,1]
+[~,g_w]=size(graph);
+path_g=zeros(1,g_w);
+path_g(1,:)=graph(sou,:);
+min_index=sou;
+min_value=0;
+path(1,1)=min_index;
+count=2;
 
-A = setupgraph(A,inf,1);
+all_min_index(1,1)=min_index;
+ami_count=2;
+graph(1,1)=inf;
 
-if d==1
-    d=s;
-end
-A=exchangenode(A,1,s);
-
-lengthA=size(A,1);
-W=zeros(lengthA);
-for i=2 : lengthA
-    W(1,i)=i;
-    W(2,i)=A(1,i);
-end
-
-for i=1 : lengthA
-    D(i,1)=A(1,i);
-    D(i,2)=i;
-end
-
-D2=D(2:length(D),:);
-L=2;
-while L<=(size(W,1)-1)
-    L=L+1;
-    D2=sortrows(D2,1);
-    k=D2(1,2);
-    W(L,1)=k;
-    D2(1,:)=[];
-    for i=1 : size(D2,1)
-        if D(D2(i,2),1)>(D(k,1)+A(k,D2(i,2)))
-            D(D2(i,2),1) = D(k,1)+A(k,D2(i,2));
-            D2(i,1) = D(D2(i,2),1);
+while min_index~=des
+    [min_value,min_index]=min(path_g);
+    [~,p_w]=size(all_min_index);
+    for i=1:p_w
+       graph(min_index,all_min_index(1,i))=inf;
+       graph(all_min_index(1,i),min_index)=inf;
+    end
+    all_min_index(1,ami_count)=min_index;
+    ami_count=ami_count+1;
+    
+    path_g(1,min_index)=inf;
+    new_path_g=graph(min_index,:)+min_value;
+    
+    tmp_g=sort([path_g;new_path_g]);
+    if tmp_g(1,des)~=Inf
+        if tmp_g(1,des)==new_path_g(1,des)
+            path(1,count)=min_index;
+            count=count+1;
         end
     end
-    
-    for i=2 : length(A)
-        W(L,i)=D(i,1);
-    end
-end
-if d==s
-    L=[1];
-else
-    L=[d];
-end
-e=W(size(W,1),d);
-L = listdijkstra(L,W,s,d);
+    path_g=tmp_g(1,:);
+end               
+cost=min_value;
+path(1,count)=des;
+path=fliplr(path);
 end
