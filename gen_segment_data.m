@@ -6,6 +6,7 @@ function s_data=gen_segment_data(data,con,pre)
     [~,traj_w]=size(data);
     s_data=[];
     for i=1:traj_w 
+        i
         S=m_segment(data(i).cord(1,:),data(i).cord(2,:),con,pre);
         s_data(i).id=data(i).id;
         s_data(i).segs=S;
