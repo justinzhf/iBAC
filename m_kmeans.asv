@@ -9,16 +9,15 @@ for i=1:cla_num
     clusters.clus(i).id=i;
     clusters.clus(i).cla=t_data(i);
     
-    choose_t=unidrnd(t_w);
-    is_exist=find(ts==choose_t,1);
-    while ~isempty(is_exist)
+    choose_t=unidrnd(1,t_w);
+    is_exist
+    while ~isempty()
         choose_t=unidrnd(1,t_w);
     end
     ts(1,i)=choose_t;
     u(1,i)=t_data(choose_t);
 end
 for i=1:iter_times
-    
     for j=cla_num+1:t_w
         min_index=1;
         min_dis=0;
@@ -32,8 +31,8 @@ for i=1:iter_times
         clusters.clus(min_index).cla=[clusters.clus(min_index).cla;t_data(1,j)];
     end
     for j=1:cla_num
-        [cla_h,~]=size(clusters.clus(j).cla);
-        u(1,j)=struct('id',0,'clus_id',0,'cord',gen_rep_traj(0.5,cla_h/500,clusters.clus(j).cla,s_map));
+        [cla_h,~]=size(clusters.clus(i).cla);
+        u(1,j)=struct('id',0,'clus_id',0,'cord',gen_rep_traj(0.5,cla_h/500,clusters.clus(i).cla,s_map));
     end
 end
 end
