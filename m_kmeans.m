@@ -17,13 +17,14 @@ for i=1:cla_num
     ts(1,i)=choose_t;
     u(1,i)=t_data(choose_t);
 end
+
 for i=1:iter_times
-    
-    for j=cla_num+1:t_w
+    i
+    for j=1:t_w
         min_index=1;
-        min_dis=0;
+        min_dis=inf;
         for k=1:cla_num
-            dis=fre_distance(t_data(1,k),u(1,k));
+            dis=fre_distance(t_data(1,j),u(1,k));
             if dis<min_dis
                 min_dis=dis;
                 min_index=k;
@@ -31,9 +32,15 @@ for i=1:iter_times
         end
         clusters.clus(min_index).cla=[clusters.clus(min_index).cla;t_data(1,j)];
     end
+    if i==iter_times
+        break;
+    end
     for j=1:cla_num
         [cla_h,~]=size(clusters.clus(j).cla);
-        u(1,j)=struct('id',0,'clus_id',0,'cord',gen_rep_traj(0.5,cla_h/500,clusters.clus(j).cla,s_map));
+        if ~isempty(clusters.clus(j).cla)
+            u(1,j)=struct('id',0,'clus_id',0,'cord',gen_rep_traj(0.5,cla_h/500,clusters.clus(j).cla,s_map));
+        end
+        clusters.clus(j).cla=[];
     end
 end
 end
