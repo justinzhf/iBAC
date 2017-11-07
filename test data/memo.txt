@@ -1,2 +1,2 @@
-struct_traj run_IBC_rec(T_data,20,50,40,S_map);
+clus=run_IBC_rec(T_data,17,5,40,S_map);
 [clusters,cla_num]=run_IBC_rec(res_data(1,1:200),29,50,70,ress_map);

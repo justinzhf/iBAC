@@ -1,0 +1,7 @@
+function rand_index(clusters)
+[~,clus_w]=size(clusters.clus);
+for i=1:clus_w
+    cla=clusters.clus(i).cla;
+    
+end
+end

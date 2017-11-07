@@ -1,4 +1,4 @@
-function [clusters,cla_num]=run_IBC_rec(T,seg_acc,tra_acc,iter_times,s_map)
+function [clusters,cla_num,RI]=run_IBC_rec(T,seg_acc,tra_acc,iter_times,s_map)
 
 tree=IBC(T,seg_acc,tra_acc,s_map);
 clusters=struct('clus_num',0,'clus',struct('id',0,'cla',[]));
@@ -19,5 +19,5 @@ for i=1:cla_w
     [cla_num(i,1),~]=size(clusters.clus(i).cla);
 end
 cla_num=sort(cla_num,'descend');
-
+RI=rand_index(clusters);
 end
